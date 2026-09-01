@@ -1,0 +1,30 @@
+# CRÍTICO: sin este archivo, el `COPY . .` del Dockerfile mete backend/secrets/
+# (service accounts de Firebase y la clave de firma Ed25519) DENTRO de una capa
+# de la imagen. Esa capa queda en el disco del VPS y en cualquier registry al
+# que se suba la imagen — y sigue ahí aunque el Dockerfile final no la copie,
+# porque las capas intermedias son inmutables y extraíbles con `docker save`.
+secrets/
+*.key
+*.pem
+*.p12
+*.serviceaccount.json
+
+# Entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Artefactos de build y datos locales
+bin/
+server
+*.test
+*.out
+chat-uploads/
+uploads/
+storage/
+
+# Metadatos que solo engordan el contexto de build
+.git/
+.gitignore
+.DS_Store
+*.md
